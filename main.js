@@ -114,12 +114,14 @@ function lock()
         box.appendChild(arDn);
         box.appendChild(color);
 
-        rects.push(new Rect(mousePos.x, mousePos.y - horizon, `hsl(${rects.length * 20}, 20%, 50%)`));
+        rects.push(new Rect(mousePos.x, mousePos.y - horizon, rects.length * 20));
 
         placeStage++;
 
         arUp.onclick = function(e) {swap(Number(box.id), true)};
         arDn.onclick = function(e) {swap(Number(box.id), false)};
+
+        boxes.scrollTo(0, boxes.scrollHeight);
     }
     else
     {

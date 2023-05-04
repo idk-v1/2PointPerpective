@@ -1,6 +1,6 @@
 class Rect
 {
-    constructor(x, y, hsl)
+    constructor(x, y, color)
     {
         this.ft = new Point(x, y);
         this.fb = new Point(x, y);
@@ -13,7 +13,7 @@ class Rect
 
         this.stage = 1;
 
-        this.color = hsl;
+        this.color = color;
     }
 
     updatePos(clickX, clickY, width)
@@ -65,8 +65,8 @@ class Rect
     draw(ctx, hor)
     {
         var int;
-        ctx.fillStyle = this.color;
-        ctx.strokeStyle = "#f00";
+        ctx.fillStyle = `hsl(${this.color}, ${dark ? "50%, 40%" : "70%, 60%"})`;
+        ctx.strokeStyle = `hsl(${this.color}, 100%, ${dark * 25 + 25}%)`;
         switch (this.stage + 1)
         {
         case 5: // Done
