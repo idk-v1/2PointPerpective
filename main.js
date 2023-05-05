@@ -18,7 +18,8 @@ var horizon = can.height / 2;
 
 var mousePos = new Point(0, 0);
 
-var dark = true;
+var dark = localStorage.getItem("theme") === "dark";
+document.querySelector("link").href = (dark ? "dark.css" : "light.css");
 
 can.addEventListener("click", function(e) 
 {
@@ -61,6 +62,7 @@ document.addEventListener("keydown", function(evt)
         case "d":
             dark = !dark;
             document.querySelector("link").href = (dark ? "dark.css" : "light.css");
+            localStorage.setItem("theme", (dark ? "dark" : "light"));
     }
 });
 
