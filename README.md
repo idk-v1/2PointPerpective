@@ -7,8 +7,8 @@
 ## Placing Rectangles
 #### First, Click anywhere to set the position of Top Center corner (Position).
 #### Next, Click below the first point to set the Bottom Center corner (Height).
-#### After that, Click to the left of the first point to set the Top Left corner (Left Length).
-#### Finally, Click to the right of the first point to set the Top Right corner (Right Length).
+#### After that, Click to the left of the first point to set the Left Side (Left Length).
+#### Finally, Click to the right of the first point to set the Right Side (Right Length).
 <br>
 
 ## Keyboard
