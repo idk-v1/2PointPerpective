@@ -85,7 +85,7 @@ function render()
     ctx.closePath();
 
     for (var i = 0; i < rects.length; i++)
-        rects[i].draw(ctx, horizon);
+        rects[i].draw(ctx, can.width, horizon);
 }
 
 function lock()
@@ -96,6 +96,7 @@ function lock()
         var arUp = document.createElement("div");
         var arDn = document.createElement("div");
         var color = document.createElement("div");
+        var show = document.createElement("div");
 
         box.id = rects.length;
         box.classList .add("box");
@@ -107,12 +108,15 @@ function lock()
         arDn.textContent = "^";
 
         color.classList.add("color");
-        color.style.backgroundColor = `hsl(${rects.length * 20}, 20%, 50%)`;
+        color.style.backgroundColor = `hsl(${rects.length * 20}, 50%, 50%)`;
+
+        show.classList.add("show");
 
         boxes.append(box);
         box.appendChild(arUp);
         box.appendChild(arDn);
         box.appendChild(color);
+        box.appendChild(show);
 
         rects.push(new Rect(mousePos.x, mousePos.y - horizon, rects.length * 20));
 
@@ -120,6 +124,11 @@ function lock()
 
         arUp.onclick = function(e) {swap(Number(box.id), true)};
         arDn.onclick = function(e) {swap(Number(box.id), false)};
+        show.onclick = function(e) 
+        {
+            rects[Number(box.id)].show = !rects[Number(box.id)].show; 
+            show.textContent = (rects[Number(box.id)].show ? "✓" : "");
+        };
 
         boxes.scrollTo(0, boxes.scrollHeight);
     }
@@ -162,9 +171,19 @@ function swap(id, up)
 
                 tempBox0.children[0].onclick = function(e) {swap(id - 1, true)};
                 tempBox0.children[1].onclick = function(e) {swap(id - 1, false)};
+                tempBox0.children[3].onclick = function(e) 
+                {
+                    rects[id - 1].show = !rects[id - 1].show; 
+                    tempBox0.children[3].textContent = (rects[id - 1].show ? "✓" : "");
+                };
 
                 tempBox1.children[0].onclick = function(e) {swap(id, true)};
                 tempBox1.children[1].onclick = function(e) {swap(id, false)};
+                tempBox1.children[3].onclick = function(e) 
+                {
+                    rects[id].show = !rects[id].show; 
+                    tempBox1.children[3].textContent = (rects[id].show ? "✓" : "");
+                };
 
                 rects[id] = rects[id - 1];
                 rects[id - 1] = tempRect;
@@ -185,9 +204,19 @@ function swap(id, up)
 
                 tempBox0.children[0].onclick = function(e) {swap(id + 1, true)};
                 tempBox0.children[1].onclick = function(e) {swap(id + 1, false)};
+                tempBox0.children[3].onclick = function(e) 
+                {
+                    rects[id + 1].show = !rects[id + 1].show; 
+                    tempBox0.children[3].textContent = (rects[id + 1].show ? "✓" : "");
+                };
 
                 tempBox1.children[0].onclick = function(e) {swap(id, true)};
                 tempBox1.children[1].onclick = function(e) {swap(id, false)};
+                tempBox1.children[3].onclick = function(e) 
+                {
+                    rects[id].show = !rects[id].show; 
+                    tempBox1.children[3].textContent = (rects[id].show ? "✓" : "");
+                };
 
                 rects[id] = rects[id + 1];
                 rects[id + 1] = tempRect;

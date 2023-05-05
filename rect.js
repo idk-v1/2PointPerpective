@@ -14,6 +14,8 @@ class Rect
         this.stage = 1;
 
         this.color = color;
+
+        this.show = false;
     }
 
     updatePos(clickX, clickY, width)
@@ -62,15 +64,20 @@ class Rect
         }
     }
 
-    draw(ctx, hor)
+    draw(ctx, width, hor)
     {
+        var first = true;
         var int;
-        ctx.fillStyle = `hsl(${this.color}, ${dark ? "50%, 40%" : "70%, 60%"})`;
+        ctx.fillStyle = `hsl(${this.color}, 50%, 50%)`;
         ctx.strokeStyle = `hsl(${this.color}, 100%, ${dark * 25 + 25}%)`;
         switch (this.stage + 1)
         {
         case 5: // Done
-            ctx.strokeStyle = (dark ? "#fff" : "#000");
+            if (first)
+            {
+                ctx.strokeStyle = (dark ? "#fff" : "#000");
+                first = false;
+            }
         case 4: // Right
             ctx.beginPath();
             ctx.moveTo(this.ft.x, hor + this.ft.y);
@@ -98,7 +105,12 @@ class Rect
             ctx.fill();
             ctx.stroke();
             ctx.closePath();
-            ctx.strokeStyle = (dark ? "#fff" : "#000");
+
+            if (first)
+            {
+                ctx.strokeStyle = (dark ? "#fff" : "#000");
+                first = false;
+            }
         case 3: // Left
             ctx.beginPath();
             ctx.moveTo(this.ft.x, hor + this.ft.y);
@@ -108,7 +120,12 @@ class Rect
             ctx.fill();
             ctx.stroke();
             ctx.closePath();
-            ctx.strokeStyle = (dark ? "#fff" : "#000");
+
+            if (first)
+            {
+                ctx.strokeStyle = (dark ? "#fff" : "#000");
+                first = false;
+            }
         case 2: // Bottom
             ctx.beginPath();
             ctx.moveTo(this.ft.x, hor + this.ft.y);
@@ -116,7 +133,56 @@ class Rect
             ctx.fill();
             ctx.stroke();
             ctx.closePath();
-            ctx.strokeStyle = (dark ? "#fff" : "#000");
+
+            if (first)
+            {
+                ctx.strokeStyle = (dark ? "#fff" : "#000");
+                first = false;
+            }
         }
+
+        ctx.strokeStyle = "#8888";
+        ctx.beginPath();
+        switch (this.stage + 1)
+        {
+            case 5:
+                if (!this.show)
+                    break;
+            case 4:
+                if (this.ft.y > 0)
+                {
+                    ctx.moveTo(this.rt.x, hor + this.rt.y);
+                    ctx.lineTo(0, hor);
+                }
+                else if (this.fb.y < 0)
+                {
+                    ctx.moveTo(this.rb.x, hor + this.rb.y);
+                    ctx.lineTo(0, hor);
+                }
+
+            case 3:
+                if (this.ft.y > 0)
+                {
+                    ctx.moveTo(this.lt.x, hor + this.lt.y);
+                    ctx.lineTo(width, hor);
+                }
+                else if (this.fb.y < 0)
+                {
+                    ctx.moveTo(this.lb.x, hor + this.lb.y);
+                    ctx.lineTo(width, hor);
+                }
+
+            case 2:
+                ctx.moveTo(0, hor);
+                ctx.lineTo(this.fb.x, hor + this.fb.y);
+                ctx.lineTo(width, hor);
+
+            case 1:
+                ctx.moveTo(0, hor);
+                ctx.lineTo(this.ft.x, hor + this.ft.y);
+                ctx.lineTo(width, hor);
+        }
+        ctx.stroke();
+        ctx.closePath();
     }
 }
