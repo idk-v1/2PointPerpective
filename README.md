@@ -12,7 +12,7 @@
 <br>
 
 ## Keyboard
-#### Press 'escape' to undo a corner or rectangle
+#### Press 'escape' to undo a corner or rectangle. **Bug:** Undoes the top layer, not the last layer added.
 #### Use the arrow keys to move the view up and down.
 #### Press 'd' to toggle dark mode.
 <br>
